@@ -22,7 +22,7 @@ jobs:
           pip install -r requirements.txt
 
       - name: Run scraper
-        run: python3 3cx_scraper.py
+        run: python3 scrapper.py
         env:
           ODOO_URL: ${{ secrets.ODOO_URL }}
           ODOO_DB: ${{ secrets.ODOO_DB }}
