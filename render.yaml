@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: 3cx-scraper
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: sleep infinity
+    plan: free
+
+cron:
+  - name: Run 3CX Scraper
+    schedule: "*/30 * * * *"
+    command: "python3 3cx_scraper.py"
