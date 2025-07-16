@@ -10,23 +10,32 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import odoorpc
 import os
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 
-load_dotenv()
+# load_dotenv()
 
 # logging
 logging.basicConfig(level=logging.INFO)
 _logger = logging.getLogger("3cx_scraper")
 
-# ENV CONFIG
-ODOO_URL = os.getenv('ODOO_URL')
-ODOO_DB = os.getenv('ODOO_DB')
-ODOO_USER = os.getenv('ODOO_USER')
-ODOO_PASS = os.getenv('ODOO_PASS')
+# # ENV CONFIG
+# ODOO_URL = os.getenv('ODOO_URL')
+# ODOO_DB = os.getenv('ODOO_DB')
+# ODOO_USER = os.getenv('ODOO_USER')
+# ODOO_PASS = os.getenv('ODOO_PASS')
 
-THREECX_URL = os.getenv('THREECX_URL')
-THREECX_USER = os.getenv('THREECX_USER')
-THREECX_PASS = os.getenv('THREECX_PASS')
+# THREECX_URL = os.getenv('THREECX_URL')
+# THREECX_USER = os.getenv('THREECX_USER')
+# THREECX_PASS = os.getenv('THREECX_PASS')
+
+# ENV CONFIG
+ODOO_URL = os.getenv("ODOO_URL")
+ODOO_DB = os.getenv("ODOO_DB")
+ODOO_USER = os.getenv("ODOO_USER")
+ODOO_PASS = os.getenv("ODOO_PASS")
+THREECX_URL = os.getenv("THREECX_URL")
+THREECX_USER = os.getenv("THREECX_USER")
+THREECX_PASS = os.getenv("THREECX_PASS")
 
 
 def hms_to_ceil_float_hours(time_str):
