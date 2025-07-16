@@ -44,6 +44,9 @@ def scrape_3cx():
         try:
             # Login
             page.goto(login_url, timeout=60000)
+            page.wait_for_selector('#loginInput', timeout=15000)
+            html_content = page.content()
+            print(f"LOGIN PAGE: {html_content}")
             page.fill('#loginInput', THREECX_USER)
             page.fill('#passwordInput', THREECX_PASS)
             page.click('#submitBtn')
@@ -52,6 +55,8 @@ def scrape_3cx():
             # Navigate to call reports
             page.goto(report_url)
             page.wait_for_selector('table tbody tr', timeout=15000)
+            html_content = page.content()
+            print(f"TABLE PAGE: {html_content}")
 
             rows = page.query_selector_all('table tbody tr')
 
