@@ -74,8 +74,11 @@ def scrape_3cx():
         time.sleep(sleep_time)
         WebDriverWait(driver, timeout_time).until(
             EC.invisibility_of_element_located((By.CSS_SELECTOR, '.loading')))
+        WebDriverWait(driver, timeout_time).until(
+            EC.presence_of_element_located((By.CSS_SELECTOR, 'table tbody tr'))
+        )
         rows = driver.find_elements(By.CSS_SELECTOR, 'table tbody tr')
-
+        _logger.debug(driver.page_source)
         for row in rows:
             cols = row.find_elements(By.TAG_NAME, 'td')
             _call_time = cols[0].text.strip()
@@ -102,7 +105,7 @@ def scrape_3cx():
                 'call_id': call_id,
                 'call_from': call_from,
                 'call_to': call_to,
-                'call_time': call_time,
+                'call_time': call_time.strftime('%m/%d/%Y %I:%M:%S %p'),
                 'call_type': call_type,
                 'call_status': call_status,
                 'call_ringing_time': ringing_time,
@@ -134,6 +137,6 @@ def push_to_odoo(records):
 
 if __name__ == "__main__":
     scraped_data = scrape_3cx()
-    print(f"Scraped: {scraped_data}.")
+    _logger.info(f"Scraped data: {scraped_data}.")
     if scraped_data:
         push_to_odoo(scraped_data)
