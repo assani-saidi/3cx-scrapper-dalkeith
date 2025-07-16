@@ -1,0 +1,34 @@
+name: Run 3CX Scraper
+
+on:
+  schedule:
+    - cron: '*/30 * * * *'  # Every 30 minutes
+  workflow_dispatch:        # Optional: lets you trigger it manually
+
+jobs:
+  run-scraper:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          playwright install --with-deps
+
+      - name: Run scraper
+        run: python3 scrapper.py
+        env:
+          ODOO_URL: ${{ secrets.ODOO_URL }}
+          ODOO_DB: ${{ secrets.ODOO_DB }}
+          ODOO_USER: ${{ secrets.ODOO_USER }}
+          ODOO_PASS: ${{ secrets.ODOO_PASS }}
+          THREECX_URL: ${{ secrets.THREECX_URL }}
+          THREECX_USER: ${{ secrets.THREECX_USER }}
+          THREECX_PASS: ${{ secrets.THREECX_PASS }}
