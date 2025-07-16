@@ -114,6 +114,8 @@ def scrape_3cx():
                 'call_activity_details': call_activity_details,
             })
 
+    except Exception as e:
+        _logger.error(f"Error during scraping: {e}")
     finally:
         driver.quit()
 
