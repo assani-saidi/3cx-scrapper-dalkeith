@@ -65,6 +65,7 @@ def scrape_3cx():
         time.sleep(sleep_time)
         WebDriverWait(driver, timeout_time).until(
             EC.presence_of_element_located((By.ID, 'loginInput')))
+        _logger.info("LOGIN PAGE: ", driver.page_source)
         driver.find_element(By.ID, 'loginInput').send_keys(THREECX_USER)
         driver.find_element(By.ID, 'passwordInput').send_keys(THREECX_PASS)
         driver.find_element(By.ID, "submitBtn").click()
@@ -78,7 +79,7 @@ def scrape_3cx():
             EC.presence_of_element_located((By.CSS_SELECTOR, 'table tbody tr'))
         )
         rows = driver.find_elements(By.CSS_SELECTOR, 'table tbody tr')
-        _logger.debug(driver.page_source)
+        _logger.info("TABLE PAGE: ", driver.page_source)
         for row in rows:
             cols = row.find_elements(By.TAG_NAME, 'td')
             _call_time = cols[0].text.strip()
