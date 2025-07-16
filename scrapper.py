@@ -46,8 +46,8 @@ def hms_to_ceil_float_hours(time_str):
 
 
 def scrape_3cx():
-    sleep_time = 3
-    timeout_time = 5
+    sleep_time = 10
+    timeout_time = 20
     today = datetime.today()
     login_url = THREECX_URL.rstrip('/') + "/#/login"
     report_url = THREECX_URL.rstrip('/') + "/#/office/reports/call-reports"
