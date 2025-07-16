@@ -11,6 +11,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import odoorpc
 import os
+from selenium.webdriver.chrome.service import Service
 # from dotenv import load_dotenv
 
 # load_dotenv()
@@ -56,10 +57,16 @@ def scrape_3cx():
 
     # Setup headless Chrome
     opts = Options()
+    opts.binary_location = os.getenv("CHROME_BIN", "/usr/bin/chromium-browser")
     opts.add_argument('--headless')
     opts.add_argument('--no-sandbox')
     opts.add_argument('--disable-dev-shm-usage')
     driver = webdriver.Chrome(options=opts)
+
+    chrome_service = Service(executable_path=os.getenv(
+        "CHROMEDRIVER_PATH", "/usr/bin/chromedriver"))
+
+    driver = webdriver.Chrome(service=chrome_service, options=opts)
 
     try:
         driver.get(login_url)
