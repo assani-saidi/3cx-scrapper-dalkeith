@@ -81,9 +81,6 @@ def scrape_3cx():
             _call_time = cols[0].text.strip()
             call_time = datetime.strptime(
                 _call_time, "%m/%d/%Y %I:%M:%S %p") if _call_time else False
-            if call_time.date() < today.date():
-                continue
-
             call_id = cols[1].text.strip()
             _call_from = cols[2].text.strip()
             match = re.search(r'\((\d+)\)', _call_from)
