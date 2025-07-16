@@ -46,4 +46,4 @@ jobs:
           # give Xvfb a moment
           sleep 3
           # run your scraper
-          xvfb-run --auto-servernum --server-args='-screen 0 1280x720x24' python3 3cx_scraper.py
+          xvfb-run --auto-servernum --server-args='-screen 0 1280x720x24' python3 scrapper.py
