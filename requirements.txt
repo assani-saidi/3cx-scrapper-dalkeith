@@ -2,3 +2,4 @@ selenium
 webdriver-manager
 OdooRPC
 python-dotenv
+playwright
