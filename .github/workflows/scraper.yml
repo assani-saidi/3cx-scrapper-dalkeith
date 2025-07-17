@@ -8,7 +8,6 @@ on:
 jobs:
   run-scraper:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -21,20 +20,19 @@ jobs:
       - name: Install system dependencies (Xvfb, Chromium, Chromedriver)
         run: |
           sudo apt-get update
-          sudo apt-get install -y xvfb chromium-driver fonts-liberation libappindicator3-1 libasound2 libatk-bridge2.0-0 libatk1.0-0 libcups2 libdbus-1-3 libgdk-pixbuf2.0-0 libnspr4 libnss3 libxcomposite1 libxdamage1 libxrandr2 xdg-utils wget
-          wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-          sudo apt install -y ./google-chrome-stable_current_amd64.deb
-          google-chrome --version
+          sudo apt-get install -y xvfb chromium-browser chromium-chromedriver
+          # verify installations
+          xvfb-run --auto-servernum --server-args='-screen 0 1280x720x24' echo "Xvfb OK"
+          chromium-browser --version
           chromedriver --version
 
       - name: Install Python dependencies
         run: pip install -r requirements.txt
 
-      - name: Run scraper with Xvfb
+      - name: Run scraper under Xvfb
         env:
-          DISPLAY: ":99"
-          CHROME_BIN: "/usr/bin/google-chrome"
-          CHROMEDRIVER_PATH: "/usr/bin/chromedriver"
+          CHROME_BIN: /usr/bin/chromium-browser
+          CHROMEDRIVER_PATH: /usr/bin/chromedriver
           ODOO_URL: ${{ secrets.ODOO_URL }}
           ODOO_DB: ${{ secrets.ODOO_DB }}
           ODOO_USER: ${{ secrets.ODOO_USER }}
@@ -43,6 +41,11 @@ jobs:
           THREECX_USER: ${{ secrets.THREECX_USER }}
           THREECX_PASS: ${{ secrets.THREECX_PASS }}
         run: |
-          Xvfb :99 -screen 0 1920x1080x24 &  # start virtual display
-          sleep 3                            # wait for Xvfb to fully launch
-          python3 scrapper.py               # run the actual scraper script
+          # ensure DISPLAY is set
+          export DISPLAY=:99
+          # start Xvfb in background
+          Xvfb :99 -screen 0 1280x720x24 &
+          # give Xvfb a moment
+          sleep 3
+          # run your scraper
+          xvfb-run --auto-servernum --server-args='-screen 0 1280x720x24' python3 scrapper.py
