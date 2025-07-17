@@ -281,7 +281,7 @@ def scrape_3cx():
                     'call_id': call_id,
                     'call_from': call_from,
                     'call_to': call_to,
-                    'call_time': call_time.strftime('%m/%d/%Y %I:%M:%S %p'),
+                    'call_time': call_time.strftime('%Y-%m-%d %H:%M:%S'),
                     'call_type': call_type,
                     'call_status': call_status,
                     'call_ringing_time': ringing_time,
